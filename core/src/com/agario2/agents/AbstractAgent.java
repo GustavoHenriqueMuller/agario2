@@ -48,7 +48,7 @@ public abstract class AbstractAgent extends Agent {
 			public void onTick() {
 				ACLMessage positionMessage = new ACLMessage(ACLMessage.INFORM);
 
-				positionMessage.setContent(serializeMessagePayload(getMessagePayload()));
+				positionMessage.setContent(serializeMessagePayload(getPositionMessagePayload()));
 				positionMessage.setOntology("position");
 
 				sendMessage(positionMessage);
@@ -98,7 +98,7 @@ public abstract class AbstractAgent extends Agent {
 		return new Gson().fromJson(payload, AgentInfo.class);
 	}
 
-	public abstract AgentInfo getMessagePayload();
+	public abstract AgentInfo getPositionMessagePayload();
 	public abstract List<AgentType> getReceivers();
 
 	public abstract void putAgentsInfoMap(String key, AgentInfo value);

@@ -19,7 +19,7 @@ public class CarnivoreAgent extends AbstractAgent {
 	}
 
 	@Override
-	public AgentInfo getMessagePayload() {
+	public AgentInfo getPositionMessagePayload() {
 		AgentInfo info = new AgentInfo();
 
 		info.setPosition(entity.getPosition());

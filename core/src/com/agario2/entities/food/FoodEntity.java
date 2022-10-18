@@ -15,7 +15,7 @@ public class FoodEntity implements Renderable, Updatable {
 	public FoodEntity(String localName, Vector2 position) {
 		this.localName = localName;
 		this.position = position;
-		this.radius = 5;
+		this.radius = 7;
 	}
 
 	@Override

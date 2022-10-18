@@ -52,7 +52,9 @@ public class HerbivoreEntity implements Renderable, Updatable {
 			float distance = position.dst(agent.getPosition());
 
 			if (agent.getType() == AgentType.CARNIVORE) {
-				if (distance < minDistance) {
+				boolean carnivoreHasValidSize =	agent.getRadius() * 2 >= radius;
+
+				if (distance < minDistance && carnivoreHasValidSize) {
 					minDistance = distance;
 					closestAgent = agent;
 				}

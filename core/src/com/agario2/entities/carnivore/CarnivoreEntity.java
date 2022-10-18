@@ -30,7 +30,7 @@ public class CarnivoreEntity implements Renderable, Updatable {
 
 		this.localName = localName;
 		this.position = position;
-		this.speed = 0.5f;
+		this.speed = 0.3f;
 		this.radius = 15;
 		this.maxRadius = 150;
 	}
@@ -54,7 +54,7 @@ public class CarnivoreEntity implements Renderable, Updatable {
 
 			boolean isSmallerOrBiggerCarnivore = agent.getRadius() != radius && agent.getType() == AgentType.CARNIVORE;
 			boolean isSmallerCarnivore = agent.getRadius() < radius && agent.getType() == AgentType.CARNIVORE;
-			boolean isValidHerbivore = agent.getRadius() / 2 < radius && agent.getType() == AgentType.HERBIVORE;
+			boolean isValidHerbivore = agent.getRadius() / 2 <= radius && agent.getType() == AgentType.HERBIVORE;
 
 			if (distance < minDistance && (isSmallerOrBiggerCarnivore || isValidHerbivore)) {
 				minDistance = distance;
