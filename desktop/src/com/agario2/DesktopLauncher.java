@@ -10,6 +10,7 @@ public class DesktopLauncher {
 
 		config.setForegroundFPS(60);
 		config.setTitle(Constants.WINDOW_TITLE + " v" + Constants.VERSION);
+		config.setResizable(false);
 
 		new Lwjgl3Application(new Game(), config);
 	}
