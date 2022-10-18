@@ -51,6 +51,7 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void render() {
 		ScreenUtils.clear(1, 1, 1, 1);
+		Gdx.graphics.setTitle(Constants.WINDOW_TITLE + " v " + Constants.VERSION + " - " + Gdx.graphics.getFramesPerSecond() + "fps");
 
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 		shapeRenderer.rect(
