@@ -1,24 +1,18 @@
 package com.agario2;
 
+import com.agario2.agents.manager.EntityManager;
 import com.agario2.entities.Renderable;
 import com.agario2.entities.Updatable;
-import com.agario2.agents.manager.EntityManager;
 import com.agario2.util.Constants;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.sun.org.apache.bcel.internal.Const;
 import jade.wrapper.StaleProxyException;
 
 public class Game extends ApplicationAdapter {
