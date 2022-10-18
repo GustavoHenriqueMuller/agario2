@@ -6,13 +6,19 @@ import com.agario2.agents.manager.EntityManager;
 import com.agario2.util.Constants;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.sun.org.apache.bcel.internal.Const;
 import jade.wrapper.StaleProxyException;
 
 public class Game extends ApplicationAdapter {
@@ -21,6 +27,10 @@ public class Game extends ApplicationAdapter {
 	private SpriteBatch spriteBatch;
 	private BitmapFont bitmapFont;
 	private EntityManager entityManager;
+
+	private float carnivoreTimer = 0;
+	private float herbivoreTimer = 0;
+	private float foodTimer = 0;
 
 	@Override
 	public void create() {
@@ -67,6 +77,33 @@ public class Game extends ApplicationAdapter {
 		for (Updatable updatable : entityManager.getUpdatables()) {
 			updatable.update();
 		}
+
+		updateTimers();
+	}
+
+	private void updateTimers() {
+		carnivoreTimer += Gdx.graphics.getDeltaTime();
+		herbivoreTimer += Gdx.graphics.getDeltaTime();
+		foodTimer += Gdx.graphics.getDeltaTime();
+
+		try {
+			if (carnivoreTimer >= Constants.CARNIVORE_TIMER) {
+				entityManager.spawnCarnivore();
+				carnivoreTimer = 0;
+			}
+
+			if (herbivoreTimer >= Constants.HERBIVORE_TIMER) {
+				entityManager.spawnHerbivore();
+				herbivoreTimer = 0;
+			}
+
+			if (foodTimer >= Constants.FOOD_TIMER) {
+				entityManager.spawnFood();
+				foodTimer = 0;
+			}
+		} catch (StaleProxyException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
@@ -86,13 +123,12 @@ public class Game extends ApplicationAdapter {
 
 		spriteBatch.begin();
 		{
-			String text = localName + " (" + Math.round(position.x) + ", " + Math.round(position.y) + ")";
-			GlyphLayout layout = new GlyphLayout(bitmapFont, text);
+			GlyphLayout layout = new GlyphLayout(bitmapFont, localName);
 
 			float textX = position.x - layout.width / 2;
 			float textY = position.y + radius + layout.height + 5;
 
-			bitmapFont.draw(spriteBatch, text, textX, textY);
+			bitmapFont.draw(spriteBatch, localName, textX, textY);
 		}
 		spriteBatch.end();
 	}

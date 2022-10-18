@@ -22,6 +22,7 @@ public class HerbivoreEntity implements Renderable, Updatable {
 	private Vector2 position;
 	private final float speed;
 	private int radius;
+	private final int maxRadius;
 
 	public HerbivoreEntity(final EntityManager entityManager, String localName, Vector2 position) {
 		this.entityManager = entityManager;
@@ -29,8 +30,9 @@ public class HerbivoreEntity implements Renderable, Updatable {
 
 		this.localName = localName;
 		this.position = position;
-		this.speed = 0.15f;
+		this.speed = 0.25f;
 		this.radius = 15;
+		this.maxRadius = 100;
 	}
 
 	@Override
@@ -61,7 +63,7 @@ public class HerbivoreEntity implements Renderable, Updatable {
 					entityManager.deleteAgent(agentLocalName);
 					agentsInfoMap.remove(agentLocalName);
 
-					radius += agent.getRadius();
+					radius = Math.min(radius + agent.getRadius(), maxRadius);
 				} else if (distance < minDistance) {
 					minDistance = distance;
 					closestAgent = agent;

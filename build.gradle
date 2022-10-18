@@ -40,7 +40,6 @@ allprojects {
 project(":desktop") {
     apply plugin: "java-library"
 
-    // TODO: MUDAR
     dependencies {
         implementation project(":core")
         implementation files("lib/jade.jar")

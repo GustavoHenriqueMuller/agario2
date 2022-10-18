@@ -22,6 +22,7 @@ public class CarnivoreEntity implements Renderable, Updatable {
 	private Vector2 position;
 	private final float speed;
 	private int radius;
+	private final int maxRadius;
 
 	public CarnivoreEntity(final EntityManager entityManager, String localName, Vector2 position) {
 		this.entityManager = entityManager;
@@ -29,8 +30,9 @@ public class CarnivoreEntity implements Renderable, Updatable {
 
 		this.localName = localName;
 		this.position = position;
-		this.speed = 0.3f;
+		this.speed = 0.5f;
 		this.radius = 15;
+		this.maxRadius = 150;
 	}
 
 	@Override
@@ -50,10 +52,11 @@ public class CarnivoreEntity implements Renderable, Updatable {
 			float distance = position.dst(agent.getPosition());
 			float radiusSum = radius + agent.getRadius();
 
+			boolean isSmallerOrBiggerCarnivore = agent.getRadius() != radius && agent.getType() == AgentType.CARNIVORE;
 			boolean isSmallerCarnivore = agent.getRadius() < radius && agent.getType() == AgentType.CARNIVORE;
 			boolean isValidHerbivore = agent.getRadius() / 2 < radius && agent.getType() == AgentType.HERBIVORE;
 
-			if (distance < minDistance && agent.getRadius() != radius || isValidHerbivore) {
+			if (distance < minDistance && (isSmallerOrBiggerCarnivore || isValidHerbivore)) {
 				minDistance = distance;
 				closestAgent = agent;
 			}
@@ -62,7 +65,7 @@ public class CarnivoreEntity implements Renderable, Updatable {
 				entityManager.deleteAgent(agentLocalName);
 				agentsInfoMap.remove(agentLocalName);
 
-				radius += agent.getRadius();
+				radius = Math.min(radius + agent.getRadius(), maxRadius);
 			}
 		}
 
