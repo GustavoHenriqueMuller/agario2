@@ -11,6 +11,7 @@ import com.agario2.entities.herbivore.HerbivoreEntity;
 import com.agario2.util.ClassUtil;
 import com.agario2.util.Constants;
 import com.agario2.util.Vector2Utils;
+import com.badlogic.gdx.utils.Disposable;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;
@@ -24,7 +25,7 @@ import jade.wrapper.StaleProxyException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class EntityManager {
+public class EntityManager implements Disposable {
 
 	private final AgentContainer container;
 	private final Map<String, AgentController> controllerNames = new ConcurrentHashMap<>();;
@@ -47,6 +48,15 @@ public class EntityManager {
 		try {
 			container.start();
 		} catch (ControllerException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public void dispose() {
+		try {
+			this.container.kill();
+		} catch (StaleProxyException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -113,7 +123,7 @@ public class EntityManager {
 		foodCount++;
 	}
 
-	public void deleteAgent(final String agentLocalName) {
+	public void deleteAgent(String agentLocalName) {
 		AgentController controller = controllerNames.get(agentLocalName);
 
 		if (controller == null) {

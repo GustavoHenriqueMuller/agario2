@@ -106,6 +106,7 @@ public class Game extends ApplicationAdapter {
 		shapeRenderer.dispose();
 		spriteBatch.dispose();
 		bitmapFont.dispose();
+		entityManager.dispose();
 	}
 
 	public void renderEntity(String localName, Vector2 position, Color color, int radius) {
