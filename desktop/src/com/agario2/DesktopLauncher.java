@@ -13,5 +13,6 @@ public class DesktopLauncher {
 		config.setResizable(false);
 
 		new Lwjgl3Application(new Game(), config);
+		System.exit(0);
 	}
 }

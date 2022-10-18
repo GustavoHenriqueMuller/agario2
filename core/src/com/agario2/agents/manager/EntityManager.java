@@ -40,7 +40,7 @@ public class EntityManager implements Disposable {
 
 	public EntityManager() {
 		Properties properties = new ExtendedProperties();
-		//properties.setProperty(Profile.GUI, "true");
+		properties.setProperty(Profile.GUI, "true");
 		properties.setProperty(Profile.MAIN, "false");
 
 		this.container = Runtime.instance().createMainContainer(new ProfileImpl(properties));
